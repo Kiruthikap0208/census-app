@@ -6,7 +6,7 @@ import seaborn as sns
 import streamlit as st
 
 
-@st.cache_data()
+@st.cache()
 def load_data():
 	# Load the Adult Income dataset into DataFrame.
 
