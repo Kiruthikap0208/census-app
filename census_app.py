@@ -75,12 +75,12 @@ if 'Box Plot' in plot_list :
   st.subheader('Box Plot')
   plt.figure(figsize=(8,4))
   plt.title('Box plot for the hours worked per week for different income groups')
-  sns.boxplot(census_df['hours-per-week'],census_df['income'])
+  sns.boxplot(x=census_df['hours-per-week'],y=census_df['income'])
   st.pyplot()
   
   plt.figure(figsize=(8,4))
   plt.title('Box plot for the hours worked per week  for different gender groups')
-  sns.boxplot(census_df['hours-per-week'],census_df['gender'])
+  sns.boxplot(x=census_df['hours-per-week'],y=census_df['gender'])
   st.pyplot() 
 	
 # Display count plot using seaborn module and 'st.pyplot()' 
