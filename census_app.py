@@ -5,45 +5,42 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 
-st.set_page_config(page_title = 'Census Visualisation Web App',
-                   page_icon = None,
-                   layout = 'centered',
-                   initial_sidebar_state = 'auto')
+st.set_page_config(page_title='Census Visualisation Web App',
+                   page_icon='random',
+                   layout='centered',
+                   initial_sidebar_state='auto')
 
+# Configure your home page.
 # Set the title to the home page contents.
-st.subheader('Census Visualisation Web App')
+st.title('Census Visualisation Web App')
 # Provide a brief description for the web app.
-st.title('This web app allows a user to explore and visualise the census data')
+st.subheader('This web app allows a user to explore ans visualise the census data')
 
-# View Dataset Configuration
-st.header('View Data')
-# Add an expander and display the dataset as a static table within the expander.
-with st.beta_expander('View Dataset') :
+st.title("View Data")
+with st.beta_expander("View Dataset"):
   st.table(census_df)
 
 # Create three beta_columns.
-beta_col1, beta_col2, beta_col3 = st.beta_columns(3)
+st.subheader("Columns Description")
+beta_col1,beta_col2,beta_col3 = st.beta_columns(3)
 # Add a checkbox in the first column. Display the column names of 'census_df' on the click of checkbox.
-with beta_col1 :
-  if st.checkbox('Show all column names') :
-    st.table(list(census_df.columns))
-
+with beta_col1:
+  if st.checkbox("Show all columns names"):
+    st.table(census_df.columns)
 # Add a checkbox in the second column. Display the column data-types of 'census_df' on the click of checkbox.
-with beta_col2 :
-  if st.checkbox('View column data type') :
-    st.table(census_df.dtypes)
-
+with beta_col2:
+  if st.checkbox("View column data-type"):
+    st.table(census_df.dtype)
 # Add a checkbox in the third column followed by a selectbox which accepts the column name whose data needs to be displayed.
-with beta_col3 :
-  if st.checkbox('View column data') :
-    column_data = st.selectbox('Select column', tuple(census_df.columns))
-    st.table(census_df[column_data])
-
+with beta_col3:
+  if st.checkbox("View column data"):
+    column_data = st.selectbox("Select Column",tuple(census_df.columns))
+  st.write(census_df[column_data])
 # Display summary of the dataset on the click of checkbox.
-if st.checkbox('Show summary') :
+if st.checkbox("Show Summary"):
   st.table(census_df.describe())
-
-@st.cache()
+  
+@st.cache_data()
 def load_data():
 	# Load the Adult Income dataset into DataFrame.
 
@@ -79,7 +76,7 @@ def load_data():
 	return df
 
 census_df = load_data()
-st.set_option('deprecation.showPyplotGlobalUse', False)
+
 st.title('Census Data Web app')
 
 if st.sidebar.checkbox("show raw data"):
@@ -88,24 +85,27 @@ if st.sidebar.checkbox("show raw data"):
   st.write("Number of rows are ",census_df.shape[0])
   st.write("Number of columns are ",census_df.shape[1])
 
-st.subheader('Visualisation Selector')
-
+# Add a multiselect widget to allow the user to select multiple visualisations.
+# Add a subheader in the sidebar with the label "Visualisation Selector"
+st.sidebar.subheader("Visualisation Selector")
 # Add a multiselect in the sidebar with label 'Select the Charts/Plots:'
 # Store the current value of this widget in a variable 'plot_list'.
-plot_list = st.sidebar.multiselect('Select the Charts/Plots:', ('Pie chart', 'Box Plot', 'Count Plot'))
+plot_list = st.sidebar.multiselect("Select the Charts/Plots: ",("pie plot","box plot","count plot"))
 # Display pie plot using matplotlib module and 'st.pyplot()'
-if 'Pie chart' in plot_list:
-  st.subheader('Pie chart')
-  pie_income = census_df['income'].value_counts()
-  plt.pie(pie_income, labels = pie_income.index, autopct = '%1.2f%%')
-  plt.title("Distribution of records for income-groups")
+if 'Pie Chart' in plot_list:
+  st.subheader('Pie Chart')
+  pie_data = census_df['income'].value_counts()
+  plt.figure(figsize=(3,6))
+  plt.title("Distribution of records for different income-group")
+  plt.pie(pie_data,labels=pie_data.index,autopct='%1.2f%%',startangle=30,)
   st.pyplot()
   
-  pie_gender = census_df['gender'].value_counts()
-  plt.pie(pie_gender, labels = pie_gender.index, autopct = '%1.2f%%')
-  plt.title("Distribution of records for gender groups")
+  pie_data = census_df['gender'].value_counts()
+  plt.figure(figsize=(3,6))
+  plt.title("Distribution of records for different Gender")
+  plt.pie(pie_data,labels=pie_data.index,autopct='%1.2f%%',startangle=30)
   st.pyplot()
-
+  
 # Display box plot using matplotlib module and 'st.pyplot()'
 if 'Box Plot' in plot_list :
   st.subheader('Box Plot')
@@ -117,12 +117,12 @@ if 'Box Plot' in plot_list :
   plt.figure(figsize=(8,4))
   plt.title('Box plot for the hours worked per week  for different gender groups')
   sns.boxplot(x=census_df['hours-per-week'],y=census_df['gender'])
-  st.pyplot() 
-	
-# Display count plot using seaborn module and 'st.pyplot()' 
-if 'Count Plot' in plot_list:
-  st.subheader("Count Plot for Distribution of records for unique workclass groups")
-  sns.countplot(x = 'workclass', data = census_df)
-  st.pyplot()
+  st.pyplot()   
 
+# Display count plot using seaborn module and 'st.pyplot()' 
+if "Count Plot" in plot_list:
+  st.subheader('Count Plot')
+  plt.title(' count plot for distribution of records for unique workclass groups for different income groups')
+  sns.countplot(x='workclass',hue = 'income',data=census_df)
+  st.pyplot()
 
