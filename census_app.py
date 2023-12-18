@@ -50,3 +50,44 @@ if st.sidebar.checkbox("show raw data"):
   st.dataframe(census_df)
   st.write("Number of rows are ",census_df.shape[0])
   st.write("Number of columns are ",census_df.shape[1])
+
+# Add a multiselect widget to allow the user to select multiple visualisations.
+# Add a subheader in the sidebar with the label "Visualisation Selector"
+st.sidebar.subheader("Visualisation Selector")
+# Add a multiselect in the sidebar with label 'Select the Charts/Plots:'
+# Store the current value of this widget in a variable 'plot_list'.
+plot_list = st.sidebar.multiselect("Select the Charts/Plots: ",("pie plot","box plot","count plot"))
+# Display pie plot using matplotlib module and 'st.pyplot()'
+if 'Pie Chart' in plot_list:
+  st.subheader('Pie Chart')
+  pie_data = census_df['income'].value_counts()
+  plt.figure(figsize=(3,6))
+  plt.title("Distribution of records for different income-group")
+  plt.pie(pie_data,labels=pie_data.index,autopct='%1.2f%%',startangle=30,)
+  st.pyplot()
+  
+  pie_data = census_df['gender'].value_counts()
+  plt.figure(figsize=(3,6))
+  plt.title("Distribution of records for different Gender")
+  plt.pie(pie_data,labels=pie_data.index,autopct='%1.2f%%',startangle=30)
+  st.pyplot()
+  
+# Display box plot using matplotlib module and 'st.pyplot()'
+if 'Box Plot' in plot_list :
+  st.subheader('Box Plot')
+  plt.figure(figsize=(8,4))
+  plt.title('Box plot for the hours worked per week for different income groups')
+  sns.boxplot(census_df['hours-per-week'],census_df['income'], data=census_df)
+  st.pyplot()
+  
+  plt.figure(figsize=(8,4))
+  plt.title('Box plot for the hours worked per week  for different gender groups')
+  sns.boxplot(census_df['hours-per-week'],census_df['gender'], data=census_df)
+  st.pyplot()   
+
+# Display count plot using seaborn module and 'st.pyplot()' 
+if "Count Plot" in plot_list:
+  st.subheader('Count Plot')
+  plt.title(' count plot for distribution of records for unique workclass groups for different income groups')
+  sns.countplot(x='workclass',hue = 'income',data=census_df)
+  st.pyplot()
