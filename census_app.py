@@ -55,7 +55,7 @@ st.subheader('Visualisation Selector')
 
 # Add a multiselect in the sidebar with label 'Select the Charts/Plots:'
 # Store the current value of this widget in a variable 'plot_list'.
-features_list = st.multiselect("Select Features:",('income','hours-per-week','gender'))
+features_list = st.multiselect("Select Features:",('income','gender'))
 plot_list = st.sidebar.multiselect('Select the Charts/Plots:', ('Pie chart', 'Box Plot', 'Count Plot'))
 
 # Display pie plot using matplotlib module and 'st.pyplot()'
