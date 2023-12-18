@@ -73,12 +73,12 @@ if 'Pie chart' in plot_list:
 # Display box plot using matplotlib module and 'st.pyplot()'
 if 'Box Plot' in plot_list:
   st.subheader("Box Plot for Hours Worked per week")
-  plt.figure(figsize = (12, 2))
+  plt.figure(figsize = (12, 2),dpi = 96)
   sns.boxplot('hours-per-week', 'income', data=census_df)
   plt.title("Distribution of hours per week for different income groups")
   st.pyplot()
 
-  plt.figure(figsize = (12, 2))
+  plt.figure(figsize = (12, 2),dpi = 96)
   sns.boxplot('hours-per-week', 'gender', data=census_df)
   plt.title("Distribution of hours per week for different gender groups")
   st.pyplot()
