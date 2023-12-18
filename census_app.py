@@ -42,7 +42,7 @@ def load_data():
 	return df
 
 census_df = load_data()
-
+st.set_option('deprecation.showPyplotGlobalUse', False)
 st.title('Census Data Web app')
 
 if st.sidebar.checkbox("show raw data"):
@@ -56,7 +56,6 @@ st.subheader('Visualisation Selector')
 # Add a multiselect in the sidebar with label 'Select the Charts/Plots:'
 # Store the current value of this widget in a variable 'plot_list'.
 plot_list = st.sidebar.multiselect('Select the Charts/Plots:', ('Pie chart', 'Box Plot', 'Count Plot'))
-st.set_option('deprecation.showPyplotGlobalUse', False)
 # Display pie plot using matplotlib module and 'st.pyplot()'
 if 'Pie chart' in plot_list:
   st.subheader('Pie chart')
