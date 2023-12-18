@@ -55,7 +55,6 @@ st.subheader('Visualisation Selector')
 
 # Add a multiselect in the sidebar with label 'Select the Charts/Plots:'
 # Store the current value of this widget in a variable 'plot_list'.
-features_list = st.multiselect("Select Features:",('income','gender'))
 plot_list = st.sidebar.multiselect('Select the Charts/Plots:', ('Pie chart', 'Box Plot', 'Count Plot'))
 
 # Display pie plot using matplotlib module and 'st.pyplot()'
@@ -72,13 +71,17 @@ if 'Pie chart' in plot_list:
   st.pyplot()
 
 # Display box plot using matplotlib module and 'st.pyplot()'
-if "Box Plot" in plot_list:
-  for feature in features_list:
-    st.subheader(f"Box plot between {feature} and hours-per-week")
-    plt.figure(figsize = (12, 6))
-    sns.boxplot(census_df['hours-per-week'], census_df[feature])
-    plt.title(f"distribution of hours per week for different {feature} groups")
-    st.pyplot()
+if 'Box Plot' in plot_list :
+  st.subheader('Box Plot')
+  plt.figure(figsize=(8,4))
+  plt.title('Box plot for the hours worked per week for different income groups')
+  sns.boxplot(census_df['hours-per-week'],census_df['income'])
+  st.pyplot()
+  
+  plt.figure(figsize=(8,4))
+  plt.title('Box plot for the hours worked per week  for different gender groups')
+  sns.boxplot(census_df['hours-per-week'],census_df['gender'])
+  st.pyplot() 
 	
 # Display count plot using seaborn module and 'st.pyplot()' 
 if 'Count Plot' in plot_list:
