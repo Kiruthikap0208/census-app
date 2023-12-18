@@ -72,17 +72,17 @@ if 'Pie chart' in plot_list:
 
 # Display box plot using matplotlib module and 'st.pyplot()'
 if 'Box Plot' in plot_list:
-  st.subheader("Box Plot for Hours Worked per week")
-  plt.figure(figsize = (12, 2),dpi = 96)
-  sns.boxplot(census_df['hours-per-week', 'income'])
-  plt.title("Distribution of hours per week for different income groups")
+  st.subheader('Boxplot')
+  plt.figure(figusize = (12,6),dpi = 96)       
+  plt.title('Box plot for difference in the range of values for the hours-per-week feature for different income groups.')
+  sns.boxplot('hours_per_week', 'income', data = census_df)
   st.pyplot()
 
-  plt.figure(figsize = (12, 2),dpi = 96)
-  sns.boxplot(census_df['hours-per-week', 'gender'])
-  plt.title("Distribution of hours per week for different gender groups")
+  plt.figure(figusize = (12,6),dpi = 96)       
+  plt.title('Box plot for difference in the range of values for the hours-per-week feature for different gender  groups.')
+  sns.boxplot('hours_per_week', 'gender', data = census_df)
   st.pyplot()
-
+	
 # Display count plot using seaborn module and 'st.pyplot()' 
 if 'Count Plot' in plot_list:
   st.subheader("Count Plot for Distribution of records for unique workclass groups")
